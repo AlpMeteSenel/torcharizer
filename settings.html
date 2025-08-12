@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  <title>Torcharizer Settings</title>
+    <style>
+      :root { color-scheme: dark; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+        margin: 0;
+        padding: 16px;
+        min-width: 280px;
+        max-width: 520px;
+        background: #0b1220;
+        color: #e5e7eb;
+      }
+      .card {
+        border: 1px solid #1f2937;
+        border-radius: 12px;
+        padding: 16px;
+        background: #0f172a;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.02);
+      }
+      .header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+      .badge { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:999px; background:linear-gradient(135deg,#2563eb,#22d3ee); color:#fff; font:700 12px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial; box-shadow:0 2px 10px rgba(37,99,235,0.45) }
+      .title { font-weight:700; color:#e5e7eb; letter-spacing:0.2px }
+      .row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; }
+      .desc { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+      /* Toggle */
+      .switch { position: relative; display: inline-block; width: 48px; height: 26px; }
+      .switch input { opacity:0; width:0; height:0; }
+      .slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#1f2937; transition:.2s; border-radius:20px; border:1px solid #334155; }
+      .slider:before { position:absolute; content:""; height:20px; width:20px; left:3px; bottom:3px; background:white; transition:.2s; border-radius:50%; }
+      input:checked + .slider { background:#2563eb; border-color:#2563eb; }
+      input:checked + .slider:before { transform: translateX(22px); }
+      a { color:#93c5fd; text-decoration:underline; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="header">
+        <img src="icons/icon-32.png" alt="Torcharizer" style="width:28px; height:28px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.45);" />
+        <div class="title">Torcharizer Settings</div>
+      </div>
+      <div class="row">
+        <div>
+          <div style="font-weight:600;">Enable AI summaries</div>
+          <div class="desc">Show AI-generated summaries in message view when enabled.</div>
+        </div>
+        <label class="switch">
+          <input id="toggle-enabled" type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="row" style="align-items:flex-start;">
+        <div style="flex:1;">
+          <div style="font-weight:600;">Model name</div>
+          <div class="desc">Local model identifier for Ollama, e.g. llama3.2:latest</div>
+        </div>
+        <input id="model-name" type="text" placeholder="llama3.2:latest" 
+               style="flex:1; min-width: 160px; padding:8px 10px; border-radius:8px; border:1px solid #334155; background:#0b1220; color:#e5e7eb;" />
+      </div>
+
+      <details id="prompt-advanced" style="margin-top:8px;">
+        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:8px; padding:8px 0; color:#cbd5e1;">
+          <span style="display:inline-block; width:8px; height:8px; border-radius:999px; background:linear-gradient(135deg,#2563eb,#22d3ee);"></span>
+          Advanced: System prompt
+        </summary>
+  <div class="desc" style="margin:6px 0 8px;">Optional. Overrides the built-in system prompt used for summarization. The add-on automatically appends “Today is &lt;date&gt; at &lt;time&gt; &lt;tz&gt;” to the end.</div>
+        <textarea id="system-prompt" rows="6" placeholder="Enter a custom system prompt (optional)"
+                  style="width:100%; padding:10px 12px; border-radius:8px; border:1px solid #334155; background:#0b1220; color:#e5e7eb; resize:vertical; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size:12px;"></textarea>
+      </details>
+    </div>
+    <script src="settings.js"></script>
+  </body>
+  </html>

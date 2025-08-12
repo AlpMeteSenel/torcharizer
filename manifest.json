@@ -1,0 +1,40 @@
+{
+  "manifest_version": 2,
+  "name": "Torcharizer",
+  "version": "1.0.0",
+  "description": "Thunderbird add-on that generates concise AI summaries of emails using a local Ollama model",
+  "author": "Alp Mete Senel",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "64": "icons/icon-64.png",
+    "128": "icons/icon-128.png"
+  },
+  "applications": {
+    "gecko": {
+      "id": "torcharizer@example.com",
+      "strict_min_version": "91.0"
+    }
+  },
+  "permissions": [
+    "messagesModify",
+    "messagesRead",
+    "storage",
+    "tabs",
+    "http://127.0.0.1:11434/*"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_title": "Torcharizer",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "64": "icons/icon-64.png"
+    },
+    "default_popup": "settings.html"
+  }
+}
