@@ -45,13 +45,22 @@
       ].join("; ")
     );
 
-    panel.innerHTML = [
-      '<div id="torcharizer-header" style="all: initial; display:flex; align-items:center; gap:8px; margin-bottom:6px; font: 600 14px -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial; color:#e5e7eb;">',
-      '  <span id="torcharizer-icon-slot" style="all: initial; width:22px; height:22px; display:inline-block; border-radius:6px; background:#1e293b; box-shadow:0 2px 6px rgba(0,0,0,0.4);"></span>',
-      '  <div style="all: initial; font: 600 14px -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial; color:#e5e7eb;">Summary</div>',
-      '</div>',
-      '  <div id="torcharizer-content" style="all: initial; white-space:pre-wrap; color:#e5e7eb; font: 14px -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial;"></div>'
-    ].join("");
+  const header = document.createElement('div');
+  header.id = 'torcharizer-header';
+  header.setAttribute('style', "all: initial; display:flex; align-items:center; gap:8px; margin-bottom:6px; font: 600 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial; color:#e5e7eb;");
+  const iconSlot = document.createElement('span');
+  iconSlot.id = 'torcharizer-icon-slot';
+  iconSlot.setAttribute('style', 'all: initial; width:22px; height:22px; display:inline-block; border-radius:6px; background:#1e293b; box-shadow:0 2px 6px rgba(0,0,0,0.4);');
+  const title = document.createElement('div');
+  title.setAttribute('style', "all: initial; font: 600 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial; color:#e5e7eb;");
+  title.textContent = 'Summary';
+  header.appendChild(iconSlot);
+  header.appendChild(title);
+  panel.appendChild(header);
+  const contentDiv = document.createElement('div');
+  contentDiv.id = 'torcharizer-content';
+  contentDiv.setAttribute('style', "all: initial; white-space:pre-wrap; color:#e5e7eb; font: 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial;");
+  panel.appendChild(contentDiv);
 
     // Programmatically insert the icon image (runtime URL sometimes resolves better this way in message display docs)
     try {
@@ -113,7 +122,16 @@
   const content = host && host.querySelector('#torcharizer-content');
     if (content) {
       const safe = (text || "(no summary)");
-      content.innerHTML = renderMarkdownToHtml(safe);
+      try {
+        const htmlString = renderMarkdownToHtml(safe);
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, 'text/html');
+        const frag = document.createDocumentFragment();
+        Array.from(doc.body.childNodes).forEach(n => frag.appendChild(n));
+        content.replaceChildren(frag);
+      } catch (e) {
+        content.textContent = safe;
+      }
       content.style.opacity = done ? "1" : (text ? "0.98" : "0.8");
       bgLog("content: setSummary length", String((text||"").length));
     }

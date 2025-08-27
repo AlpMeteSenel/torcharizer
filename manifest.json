@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Torcharizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Thunderbird add-on that generates concise AI summaries of emails using a local Ollama model",
   "author": "Alp Mete Senel",
   "icons": {
